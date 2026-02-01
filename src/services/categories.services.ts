@@ -1,5 +1,9 @@
 import { StatusCodes } from "http-status-codes";
 import type { CategoriesRepository } from "@/database/repositories/categories.repository";
+import type {
+  CreateCategoryDTO,
+  UpdateCategoryDTO,
+} from "@/dtos/categories.dtos";
 import type { QueryDTO } from "@/dtos/commons.dtos";
 import { ErrorMessage } from "@/errors";
 import type { Category, Prisma } from "@/generated/prisma/client";
@@ -8,10 +12,7 @@ import type { IGetResponse } from "@/interfaces/commons.interface";
 export class CategoryService {
   constructor(private categoryRepository: CategoriesRepository) {}
 
-  async create({
-    name,
-    description,
-  }: Prisma.CategoryCreateInput): Promise<Category> {
+  async create({ name, description }: CreateCategoryDTO): Promise<Category> {
     const foundCategory = await this.categoryRepository.getByName(name);
 
     if (foundCategory) {
@@ -38,10 +39,7 @@ export class CategoryService {
     return category;
   }
 
-  async update(
-    id: string,
-    data: Prisma.CategoryUpdateInput,
-  ): Promise<Category> {
+  async update(id: string, data: UpdateCategoryDTO): Promise<Category> {
     const category = await this.categoryRepository.getById(id);
 
     if (!category) {
