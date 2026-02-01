@@ -48,7 +48,12 @@ export class OrdersRepository {
           orderDate: "desc",
         },
       }),
-      this.prisma.order.count(),
+      this.prisma.order.count({
+        where: {
+          customerId,
+          orderDate,
+        },
+      }),
     ]);
 
     return {
@@ -85,7 +90,7 @@ export class OrdersRepository {
         id,
       },
       data: {
-        orderStatus: OrderStatus.CANCELED,
+        orderStatus: OrderStatus.CANCELLED,
         status: {
           deletedAt: new Date(),
         },

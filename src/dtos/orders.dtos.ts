@@ -1,4 +1,5 @@
 import z from "zod";
+import { OrderStatus } from "@/generated/prisma/enums";
 
 export const orderParamsSchema = z.object({
   customerId: z.string().optional(),
@@ -39,3 +40,23 @@ export const updateOrderSchema = {
 const updateOrderSchemaObject = z.object(updateOrderSchema);
 
 export type UpdateOrderDTO = z.infer<typeof updateOrderSchemaObject>;
+
+export const updateOrderStatusSchema = {
+  status: z.enum(
+    [
+      OrderStatus.PENDING,
+      OrderStatus.SHIPPED,
+      OrderStatus.DELIVERED,
+      OrderStatus.CANCELLED,
+    ],
+    {
+      error: "Invalid order status",
+    },
+  ),
+};
+
+const updateOrderStatusSchemaObject = z.object(updateOrderStatusSchema);
+
+export type UpdateOrderStatusDTO = z.infer<
+  typeof updateOrderStatusSchemaObject
+>;

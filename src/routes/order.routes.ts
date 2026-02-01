@@ -22,4 +22,8 @@ orderRoutes.get("/", (req, res, next) => {
   return orderController.get(req, res, next);
 });
 
-orderRoutes.delete("/cancel", orderController.cancel);
+orderRoutes.patch("/:id/status", (req, res, next) => {
+  return orderController.updateStatus(req, res, next);
+});
+
+orderRoutes.delete("/:id/cancel", orderController.cancel);

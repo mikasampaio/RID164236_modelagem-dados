@@ -1,7 +1,11 @@
 import type { NextFunction, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import type { QueryDTO } from "@/dtos/commons.dtos";
-import type { CreateOrderDTO, UpdateOrderDTO } from "@/dtos/orders.dtos";
+import type {
+  CreateOrderDTO,
+  UpdateOrderDTO,
+  UpdateOrderStatusDTO,
+} from "@/dtos/orders.dtos";
 import type { BodyRequest, QueryRequest } from "@/interfaces/commons.interface";
 import type { OrderService } from "@/services/orders.services";
 
@@ -62,13 +66,30 @@ export class OrdersController {
     }
   };
 
-  cancel = async (
-    req: QueryRequest<QueryDTO>,
+  updateStatus = async (
+    req: { params: { id: string }; body: UpdateOrderStatusDTO },
     res: Response,
     next: NextFunction,
   ) => {
     try {
-      const { id } = req.query;
+      const { id } = req.params;
+      const { status } = req.body;
+
+      const response = await this.ordersService.updateStatus(id, status);
+
+      return res.status(StatusCodes.OK).json(response);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  cancel = async (
+    req: { params: { id: string } },
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { id } = req.params;
 
       const response = await this.ordersService.cancel(id as string);
 

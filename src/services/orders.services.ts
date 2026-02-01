@@ -99,6 +99,30 @@ export class OrderService {
     return order;
   }
 
+  async updateStatus(id: string, status: OrderStatus): Promise<Order> {
+    const order = await this.orderRepository.getById(id);
+
+    if (!order) {
+      throw new ErrorMessage("Order not found.", StatusCodes.NOT_FOUND);
+    }
+
+    if (order.orderStatus === OrderStatus.CANCELLED) {
+      throw new ErrorMessage(
+        "Cannot update status of a canceled order.",
+        StatusCodes.BAD_REQUEST,
+      );
+    }
+
+    if (order.orderStatus === OrderStatus.DELIVERED) {
+      throw new ErrorMessage(
+        "Cannot update status of a delivered order.",
+        StatusCodes.BAD_REQUEST,
+      );
+    }
+
+    return await this.orderRepository.update(id, { orderStatus: status });
+  }
+
   async cancel(id: string): Promise<void> {
     const order = await this.orderRepository.getById(id);
 
@@ -106,16 +130,16 @@ export class OrderService {
       throw new ErrorMessage("Order not found.", StatusCodes.NOT_FOUND);
     }
 
-    if (order.orderStatus === OrderStatus.CANCELED) {
+    if (order.orderStatus === OrderStatus.CANCELLED) {
       throw new ErrorMessage(
         "Order is already canceled.",
         StatusCodes.BAD_REQUEST,
       );
     }
 
-    if (order.orderStatus === OrderStatus.COMPLETED) {
+    if (order.orderStatus === OrderStatus.DELIVERED) {
       throw new ErrorMessage(
-        "Completed orders cannot be canceled.",
+        "Delivered orders cannot be canceled.",
         StatusCodes.BAD_REQUEST,
       );
     }
