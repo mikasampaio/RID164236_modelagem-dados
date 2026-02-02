@@ -16,13 +16,13 @@ Este projeto é uma **API REST** para gerenciamento de **clientes, categorias, p
 Clone o repositório:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/mikasampaio/modelagem-dados.git
 ```
 
 Acesse a pasta do projeto:
 
 ```bash
-cd <NOME_DO_PROJETO>
+cd modelagem-dados
 ```
 
 Instale as dependências:
