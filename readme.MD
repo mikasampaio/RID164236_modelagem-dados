@@ -16,7 +16,7 @@ Este projeto é uma **API REST** para gerenciamento de **clientes, categorias, p
 Clone o repositório:
 
 ```bash
-git clone https://github.com/mikasampaio/modelagem-dados.git
+git clone https://github.com/mikasampaio/RID164236_modelagem-dados.git
 ```
 
 Acesse a pasta do projeto:
