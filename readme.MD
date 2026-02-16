@@ -25,6 +25,12 @@ Acesse a pasta do projeto:
 cd modelagem-dados
 ```
 
+ou 
+
+```bash
+code modelagem-dados/
+```
+
 Instale as dependências:
 
 ```bash
@@ -44,17 +50,18 @@ PORT=3334
 ```
 
 
-Após configurar o `.env`, execute as migrações do Prisma:
-
-```bash
-npx prisma migrate dev
-```
-
-Para iniciar o servidor em ambiente de desenvolvimento:
+Após configurar o `.env`, execute o servidor em ambiente de desenvolvimento:
 
 ```bash
 npm run dev
 ```
+
+> O servidor irá rodar na porta 3334, ou seja, http://localhost:3334
+
+---
+
+## 📘 Documentação da API
+- [Insomnia](./sales-dnc-routes.yaml)
 
 ---
 
@@ -92,7 +99,3 @@ O projeto segue uma arquitetura em camadas:
 * **Factories**: centralizam a criação de objetos e dependências
 * **Middlewares**: validação e tratamento global de erros
 
----
-
-## 📘 Documentação da API
-- [Insomnia](./sales-dnc-routes.yaml)
