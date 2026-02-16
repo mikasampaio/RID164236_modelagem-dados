@@ -88,9 +88,14 @@ export class CustomersRepository {
   }
 
   async delete(id: string): Promise<void> {
-    await this.prisma.customer.delete({
+    await this.prisma.customer.update({
       where: {
         id,
+      },
+      data: {
+        status: {
+          deletedAt: new Date(),
+        },
       },
     });
   }

@@ -47,6 +47,20 @@ export class OrdersRepository {
         orderBy: {
           orderDate: "desc",
         },
+        include: {
+          items: {
+            include: {
+              product: {
+                select: {
+                  id: true,
+                  name: true,
+                  price: true,
+                  categoryId: true,
+                },
+              },
+            },
+          },
+        },
       }),
       this.prisma.order.count({
         where: {

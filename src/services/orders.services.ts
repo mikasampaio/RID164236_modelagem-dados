@@ -12,8 +12,11 @@ export class OrderService {
   async create({ customerId, items }: CreateOrderDTO): Promise<Order> {
     return this.orderRepository.transaction(async (tx) => {
       // 1. Valida cliente
-      const customer = await tx.customer.findUnique({
-        where: { id: customerId },
+      const customer = await tx.customer.findFirst({
+        where: {
+          id: customerId,
+          status: { deletedAt: null },
+        },
       });
 
       if (!customer) {
